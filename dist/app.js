@@ -66318,10 +66318,36 @@ if ( typeof __THREE_DEVTOOLS__ !== 'undefined' ) {
 
 /***/ }),
 
-/***/ "./src/Figure.js":
-/*!***********************!*\
-  !*** ./src/Figure.js ***!
-  \***********************/
+/***/ "./src/app.js":
+/*!********************!*\
+  !*** ./src/app.js ***!
+  \********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_Scene__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Scene */ "./src/components/Scene.js");
+
+window.scene = new _components_Scene__WEBPACK_IMPORTED_MODULE_0__["default"]();
+
+/***/ }),
+
+/***/ "./src/app.scss":
+/*!**********************!*\
+  !*** ./src/app.scss ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./src/components/Figure.js":
+/*!**********************************!*\
+  !*** ./src/components/Figure.js ***!
+  \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66330,8 +66356,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Figure; });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
-/* harmony import */ var _shaders_vertexShader_glsl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shaders/vertexShader.glsl */ "./src/shaders/vertexShader.glsl");
-/* harmony import */ var _shaders_fragmentShader_glsl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shaders/fragmentShader.glsl */ "./src/shaders/fragmentShader.glsl");
+/* harmony import */ var _shaders_vertexShader_glsl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shaders/vertexShader.glsl */ "./src/shaders/vertexShader.glsl");
+/* harmony import */ var _shaders_fragmentShader_glsl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shaders/fragmentShader.glsl */ "./src/shaders/fragmentShader.glsl");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -66416,10 +66442,10 @@ function () {
 
 /***/ }),
 
-/***/ "./src/Scene.js":
-/*!**********************!*\
-  !*** ./src/Scene.js ***!
-  \**********************/
+/***/ "./src/components/Scene.js":
+/*!*********************************!*\
+  !*** ./src/components/Scene.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66427,7 +66453,7 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Scene; });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var _Figure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Figure */ "./src/Figure.js");
+/* harmony import */ var _Figure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Figure */ "./src/components/Figure.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -66445,8 +66471,6 @@ var Scene =
 /*#__PURE__*/
 function () {
   function Scene() {
-    var _this = this;
-
     _classCallCheck(this, Scene);
 
     this.container = document.getElementById('stage');
@@ -66459,9 +66483,8 @@ function () {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.initLights();
     this.initCamera();
-    this.figure = new _Figure__WEBPACK_IMPORTED_MODULE_1__["default"](this.scene, function () {
-      _this.update();
-    });
+    this.figure = new _Figure__WEBPACK_IMPORTED_MODULE_1__["default"](this.scene);
+    this.update();
   }
 
   _createClass(Scene, [{
@@ -66480,9 +66503,8 @@ function () {
   }, {
     key: "update",
     value: function update() {
-      if (this.renderer === undefined) return;
+      if (this.renderer === undefined || this.scene === undefined || this.camera === undefined) return;
       requestAnimationFrame(this.update.bind(this));
-      this.figure.update();
       this.renderer.render(this.scene, this.camera);
     }
   }]);
@@ -66491,32 +66513,6 @@ function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "./src/app.js":
-/*!********************!*\
-  !*** ./src/app.js ***!
-  \********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Scene__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Scene */ "./src/Scene.js");
-
-window.scene = new _Scene__WEBPACK_IMPORTED_MODULE_0__["default"]();
-
-/***/ }),
-
-/***/ "./src/app.scss":
-/*!**********************!*\
-  !*** ./src/app.scss ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
