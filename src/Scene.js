@@ -6,37 +6,51 @@ import Figure from './Figure';
 const perspective = 800; // to have a no so strong distortion as we rotate the plane.
 
 export default class Scene {
-  constructor() {
-    this.container = document.getElementById('stage');
-    this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.container,
-      alpha: true,
-    });
+    constructor() {
+        this.container = document.getElementById('stage')
 
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.initLights();
-    this.initCamera();
-    this.update();
-    this.figure = new Figure(this.scene);
-  }
+        this.scene = new THREE.Scene()
+        this.renderer = new THREE.WebGLRenderer({
+            canvas: this.container,
+            alpha: true
+        })
 
-  initLights() {
-    const ambientlight = new THREE.AmbientLight(0xffffff, 2);
-    this.scene.add(ambientLight);
-  }
+        this.renderer.setSize(window.innerWidth, window.innerHeight)
+        this.renderer.setPixelRatio(window.devicePixelRatio)
 
-  initCamera() {
-    const fov = (180 * (2 * Math.atan(window.innerHeight / 2 / perspective))) / Math.PI;
+        this.initLights()
+        this.initCamera()
 
-    this.camera = new THREE.Perspectivecamera(fov, window.innerWidth / window.innerHeight, 1, 1000);
-    this.camera.position.set(0, 0, perspective);
-  }
+        this.figure = new Figure(this.scene, () => {
+            this.update()
+        })
+    }
 
-  update() {
-    requestAnimateFrame(this.update.bind(this)); // we are rendering our scene in each frame;
+    initLights() {
+        const ambientlight = new THREE.AmbientLight(0xffffff, 2)
+        this.scene.add(ambientlight)
+    }
 
-    this.renderer.render(this.scene, this.camera);
-  }
+    initCamera() {
+        const fov =
+            (180 * (2 * Math.atan(window.innerHeight / 2 / perspective))) /
+            Math.PI
+
+        this.camera = new THREE.PerspectiveCamera(
+            fov,
+            window.innerWidth / window.innerHeight,
+            1,
+            1000
+        )
+        this.camera.position.set(0, 0, perspective)
+    }
+
+    update() {
+        if (this.renderer === undefined) return
+        requestAnimationFrame(this.update.bind(this))
+
+        this.figure.update()
+
+        this.renderer.render(this.scene, this.camera)
+    }
 }
