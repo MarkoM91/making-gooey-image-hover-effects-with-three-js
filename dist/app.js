@@ -66349,23 +66349,21 @@ var glslify = __webpack_require__(/*! glslify */ "./node_modules/glslify/browser
 var Figure =
 /*#__PURE__*/
 function () {
-  //we create a new class and we pass the scene as a property;
-  function Figure(scene, cb) {
+  function Figure(scene) {
     var _this = this;
 
     _classCallCheck(this, Figure);
 
     this.$image = document.querySelector('.tile__image');
     this.scene = scene;
-    this.callback = cb;
     this.loader = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]();
-    this.image = this.loader.load(this.$image.src, function () {
-      _this.start();
-    });
-    this.hover = this.loader.load(this.$image.dataset.hover);
+    this.image = this.loader.load(this.$image.src);
+    this.hoverImage = this.loader.load(this.$image.dataset.hover);
     this.$image.style.opacity = 0;
     this.sizes = new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0, 0);
     this.offset = new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0, 0);
+    this.getSizes();
+    this.createMesh();
     this.mouse = new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0, 0);
     window.addEventListener('mousemove', function (ev) {
       _this.onMouseMove(ev);
@@ -66373,13 +66371,6 @@ function () {
   }
 
   _createClass(Figure, [{
-    key: "start",
-    value: function start() {
-      this.getSizes();
-      this.createMesh();
-      this.callback();
-    }
-  }, {
     key: "getSizes",
     value: function getSizes() {
       var _this$$image$getBound = this.$image.getBoundingClientRect(),
@@ -66394,33 +66385,9 @@ function () {
   }, {
     key: "createMesh",
     value: function createMesh() {
-      this.uniforms = {
-        u_image: {
-          type: 't',
-          value: this.image
-        },
-        u_imagehover: {
-          type: 't',
-          value: this.hover
-        },
-        u_mouse: {
-          value: this.mouse
-        },
-        u_time: {
-          value: 0
-        },
-        u_res: {
-          value: new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](window.innerWidth, window.innerHeight)
-        }
-      };
       this.geometry = new three__WEBPACK_IMPORTED_MODULE_0__["PlaneBufferGeometry"](1, 1, 1, 1);
-      this.material = new three__WEBPACK_IMPORTED_MODULE_0__["ShaderMaterial"]({
-        uniforms: this.uniforms,
-        vertexShader: _shaders_vertexShader_glsl__WEBPACK_IMPORTED_MODULE_2__["default"],
-        fragmentShader: _shaders_fragmentShader_glsl__WEBPACK_IMPORTED_MODULE_3__["default"],
-        defines: {
-          PR: window.devicePixelRatio.toFixed(1)
-        }
+      this.material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
+        map: this.image
       });
       this.mesh = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](this.geometry, this.material);
       this.mesh.position.set(this.offset.x, this.offset.y, 0);
@@ -66439,15 +66406,11 @@ function () {
         y: this.mouse.x * (Math.PI / 6)
       });
     }
-  }, {
-    key: "update",
-    value: function update() {
-      this.uniforms.u_time.value += 0.01;
-    }
   }]);
 
   return Figure;
-}();
+}(); ////we create a new class and we pass the scene as a property;
+
 
 
 
