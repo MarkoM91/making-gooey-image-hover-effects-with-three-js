@@ -3,6 +3,9 @@
 uniform vec2 u_mouse;
 uniform vec2 u_res;
 
+uniform sampler2D u_image;
+uniform sampler2D u_imagehover;
+
 uniform float u_time;
 
 varying vec2 v_uv;
@@ -105,7 +108,7 @@ float snoise3(vec3 v)
   }
 
 void main() {
-  // We manage the device ratio by passing PR constant
+	// We manage the device ratio by passing PR constant
 	vec2 res = u_res * PR;
 	vec2 st = gl_FragCoord.xy / res.xy - vec2(0.5);
 	// tip: use the following formula to keep the good ratio of your coordinates
@@ -115,14 +118,19 @@ void main() {
 	vec2 mouse = u_mouse * -0.5;
 
 	vec2 circlePos = st + mouse;
-	float c = circle(circlePos, 0.3, 0.3) * 2.5;
+	float c = circle(circlePos, 0.15, 2.) * 2.5;
 
 	float offx = v_uv.x + sin(v_uv.y + u_time * .1);
 	float offy = v_uv.y - u_time * 0.1 - cos(u_time * .001) * .01;
 
-	float n = snoise3(vec3(offx, offy, u_time * .1) * 4.) - 1.;
+	float n = snoise3(vec3(offx, offy, u_time * .1) * 8.) - 1.;
 
-	float finalMask = smoothstep(0.4, 0.5, n + c);
+	float finalMask = smoothstep(0.4, 0.5, n + pow(c, 2.));
 
-	gl_FragColor = vec4(vec3(finalMask), 1.);
+	vec4 image = texture2D(u_image, v_uv);
+	vec4 hover = texture2D(u_imagehover, v_uv);
+
+	vec4 finalImage = mix(image, hover, finalMask);
+
+	gl_FragColor = finalImage;
 }
