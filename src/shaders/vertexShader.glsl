@@ -1,6 +1,3 @@
-//varying vec2 v_uv;
-glsl = require('glslify');
-
 varying vec2 v_uv;
 
 void main() {

@@ -1,6 +1,3 @@
- glsl = require('glslify')
- #pragma glslify: snoise2 = require('glsl-noise/simplex/2d')
-
  uniform vec2 u_mouse;
  uniform vec2 u_res;
 
