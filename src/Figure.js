@@ -1,7 +1,10 @@
 import * as THREE from 'three';
 import { TweenMax } from'gsap';
-import vertexShader from './vertexShader.glsl';
-import fragmentShader from './fragmentShader.glsl';
+var glsl;
+import vertexShader from './shaders/vertexShader.glsl';
+import fragmentShader from './shaders/fragmentShader.glsl';
+var glslify = require('glslify');
+
 
 
 export default class Figure { //we create a new class and we pass the scene as a property;

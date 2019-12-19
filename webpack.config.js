@@ -64,12 +64,8 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(glsl|vs|fs|vert|frag)$/,
-                exclude: /node_modules/,
-                use: [
-                    'raw-loader',
-                    'glslify-loader',
-                ],
+              test: /\.(glsl|frag|vert)$/,
+              use: ['glslify-import-loader', 'raw-loader', 'glslify-loader'],
             },
         ],
     },
