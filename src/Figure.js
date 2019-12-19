@@ -78,12 +78,12 @@ export default class Figure { //we create a new class and we pass the scene as a
     }
 
     onMouseMove(event) {
-        TM.to(this.mouse, 0.5, {
+        TweenMax.to(this.mouse, 0.5, {
             x: (event.clientX / window.innerWidth) * 2 - 1,
             y: -(event.clientY / window.innerHeight) * 2 + 1
         })
 
-        TM.to(this.mesh.rotation, 0.5, {
+        TweenMax.to(this.mesh.rotation, 0.5, {
             x: -this.mouse.y * 0.3,
             y: this.mouse.x * (Math.PI / 6)
         })

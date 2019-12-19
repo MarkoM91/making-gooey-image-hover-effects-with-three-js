@@ -66430,11 +66430,11 @@ function () {
   }, {
     key: "onMouseMove",
     value: function onMouseMove(event) {
-      TM.to(this.mouse, 0.5, {
+      gsap__WEBPACK_IMPORTED_MODULE_1__["TweenMax"].to(this.mouse, 0.5, {
         x: event.clientX / window.innerWidth * 2 - 1,
         y: -(event.clientY / window.innerHeight) * 2 + 1
       });
-      TM.to(this.mesh.rotation, 0.5, {
+      gsap__WEBPACK_IMPORTED_MODULE_1__["TweenMax"].to(this.mesh.rotation, 0.5, {
         x: -this.mouse.y * 0.3,
         y: this.mouse.x * (Math.PI / 6)
       });
