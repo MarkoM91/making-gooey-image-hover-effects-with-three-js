@@ -28,22 +28,20 @@ export default class Figure {
     }
 
     start() {
-        this.getSizes()
-
-        this.createMesh()
-
-        this.callback()
+        this.getSizes();
+        this.createMesh();
+        this.callback();
     }
 
     getSizes() {
-        const { width, height, top, left } = this.$image.getBoundingClientRect()
+        const { width, height, top, left } = this.$image.getBoundingClientRect();
 
-        this.sizes.set(width, height)
+        this.sizes.set(width, height);
 
         this.offset.set(
             left - window.innerWidth / 2 + width / 2,
             -top + window.innerHeight / 2 - height / 2
-        )
+        );
     }
 
     createMesh() {
