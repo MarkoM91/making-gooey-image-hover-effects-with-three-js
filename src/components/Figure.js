@@ -48,8 +48,13 @@ export default class Figure {
         }
 
         this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1)
-        this.material = new THREE.MeshBasicMaterial({
-            map: this.image
+        this.material = new THREE.ShaderMaterial({
+            uniforms: this.uniforms,
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            defines: {
+               PR: window.devicePixelRatio.toFixed(1)
+            }
         })
 
         this.mesh = new THREE.Mesh(this.geometry, this.material)
@@ -76,3 +81,57 @@ export default class Figure {
     	this.uniforms.u_time.value += 0.01
     }
 } ////we create a new class and we pass the scene as a property;
+
+//const vertexShader = `
+//	uniform float uProgress;
+//	uniform vec2 uMeshScale;
+//	uniform vec2 uMeshPosition;
+//	uniform vec2 uViewSize;
+//	void main(){
+//	    vec3 pos = position.xyz;
+//      float activation = uv.x;
+//      float latestStart = 0.5;
+//      float startAt = activation * latestStart;
+//      float vertexProgress = smoothstep(startAt,1.,uProgress);
+//      // Base state: pos.x
+//      // Target state: flippedX
+//      // Interpolation with: vertexProgress
+//      float flippedX = -pos.x;
+//      pos.x = mix(pos.x,flippedX, vertexProgress);
+//      // Put vertices that are closer to its target in front.
+//      pos.z += vertexProgress;
+//	    	// Scale to page view size/page size
+//	        vec2 scaleToViewSize = uViewSize / uMeshScale - 1.;
+//          // Base state = 1.
+//          // Target state = uScaleToViewSize;
+//          // Interpolation value: vertexProgress
+//            vec2 scale = vec2(
+//              1. + scaleToViewSize * vertexProgress
+//            );
+//            pos.xy *= scale;
+//            // Move towards center
+//            // Base state = pos
+//            // Target state = -uPlaneCenter;
+//            // Interpolation value: vertexProgress
+//            pos.y += -uMeshPosition.y * uProgress;
+//            pos.x += -uMeshPosition.x * uProgress;
+//             gl_Position = projectionMatrix * modelViewMatrix * vec4(pos,1.);
+//	    }
+//`;
+//
+//const fragmentShader = `
+//uniform vec3 uColor;
+//	void main(){
+//    vec3 color = uColor;
+//         gl_FragColor = vec4(color/255.,1.);
+//	}
+//`;
+//
+//const fragmentShader = `
+//uniform vec3 uColor;
+//	void main(){
+//    vec3 color = uColor;
+//         gl_FragColor = vec4(color/255.,1.);
+//	}
+//`;
+//
