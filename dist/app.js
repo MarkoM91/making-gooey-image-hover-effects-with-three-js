@@ -66411,6 +66411,25 @@ function () {
   }, {
     key: "createMesh",
     value: function createMesh() {
+      this.uniforms = {
+        u_image: {
+          type: 't',
+          value: this.image
+        },
+        u_imagehover: {
+          type: 't',
+          value: this.hover
+        },
+        u_mouse: {
+          value: this.mouse
+        },
+        u_time: {
+          value: 0
+        },
+        u_res: {
+          value: new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](window.innerWidth, window.innerHeight)
+        }
+      };
       this.geometry = new three__WEBPACK_IMPORTED_MODULE_0__["PlaneBufferGeometry"](1, 1, 1, 1);
       this.material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
         map: this.image
@@ -66431,6 +66450,11 @@ function () {
         x: -this.mouse.y * 0.3,
         y: this.mouse.x * (Math.PI / 6)
       });
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.uniforms.u_time.value += 0.01;
     }
   }]);
 

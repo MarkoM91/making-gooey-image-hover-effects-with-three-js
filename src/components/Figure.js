@@ -39,6 +39,14 @@ export default class Figure {
     }
 
     createMesh() {
+        this.uniforms = {
+           u_image: { type: 't', value: this.image },
+           u_imagehover: { type: 't', value: this.hover },
+           u_mouse: { value: this.mouse },
+           u_time: { value: 0 },
+           u_res: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+        }
+
         this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1)
         this.material = new THREE.MeshBasicMaterial({
             map: this.image
@@ -62,5 +70,9 @@ export default class Figure {
             x: -this.mouse.y * 0.3,
             y: this.mouse.x * (Math.PI / 6)
         })
+    }
+
+    update() {
+    	this.uniforms.u_time.value += 0.01
     }
 } ////we create a new class and we pass the scene as a property;
