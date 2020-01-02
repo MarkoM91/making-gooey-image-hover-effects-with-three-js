@@ -3,6 +3,7 @@ import { TweenMax } from'gsap';
 var  glsl = require('glslify');
 import vertexShader from '../shaders/vertexShader.glsl';
 import fragmentShader from '../shaders/fragmentShader.glsl';
+import { ev } from '.utils/utils';
 
 
 export default class Figure {
